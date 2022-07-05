@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 /**
- * 
+ *
  * A system provided by a company allows customers to sign in using their username and
  * password. There is a requirement for an automated system to be developed to help identify
  * attempts to hack the system and compromise accounts. Activity log files are recorded and
