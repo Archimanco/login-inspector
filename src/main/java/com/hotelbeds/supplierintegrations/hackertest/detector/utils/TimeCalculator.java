@@ -10,6 +10,7 @@ import java.util.Date;
 public class TimeCalculator {
 
     public long differenceInMinutesBetween(Date start, Date end){
-
+        // TODO
+        return 0;
     }
 }
