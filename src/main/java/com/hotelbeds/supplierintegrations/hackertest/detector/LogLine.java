@@ -2,13 +2,6 @@ package com.hotelbeds.supplierintegrations.hackertest.detector;
 
 import lombok.Value;
 
-/**
- * The log lines will be in the following format:
- * ip,date,action,username
- * IP look like  80.238.9.179 Date is in the epoch format like  1336129471 Action is one of the following:
- * SIGNIN_SUCCESS or  SIGNIN_FAILURE Username is a String like Will.Smith
- * A log line will therefore look like this: 80.238.9.179,133612947,SIGNIN_SUCCESS,Will.Smith
- */
 @Value
 public class LogLine {
     String ip;
@@ -16,28 +9,87 @@ public class LogLine {
     Action action;
     String Name;
 
+    final static int IDX_IP = 0;
+    final static int IDX_DATE = 1;
+    final static int IDX_ACTION = 2;
+    final static int IDX_USERNAME = 3;
+
+    public static LogLine toLogLine(String lineToParse) {
+
+        if(!isLogLineParseable(lineToParse))
+            return null;
+
+        String[] splittedStrings = lineToParse.split("[,]");
+
+        return new LogLine(
+                splittedStrings[IDX_IP],
+                Long.parseLong(splittedStrings[IDX_DATE]),
+                Action.fromString(splittedStrings[IDX_ACTION]),
+                splittedStrings[IDX_USERNAME]
+        );
+    }
+
     public static boolean isLogLineParseable(String lineToTest) {
-        // TODO
-        // check number of groups splitted by commas -> should be 4
-        // check if timestamp ( epoch ) is valid
-        // etc
+
+        if(lineToTest == null)
+            return false;
+
+        String[] splittedStrings = lineToTest.split("[,]");
+
+        if(splittedStrings.length != 4)
+            return false;
+
+        if(!isIpValid(splittedStrings[IDX_IP]))
+            return false;
+
+        if(!isDateValid(splittedStrings[IDX_DATE]))
+            return false;
+
+        if(!isActionValid(splittedStrings[IDX_ACTION]))
+            return false;
+
+        if(!isUsernameValid(splittedStrings[IDX_USERNAME]))
+            return false;
+
         return true;
     }
 
-    public static LogLine toLogLine(String lineToParse) {
-        // ip,date,action,username
-        final int ipPosition = 0;
-        final int datePosition = 1;
-        final int actionPosition = 2;
-        final int usernamePosition = 3;
+    public static boolean isIpValid(String stringUnderTest) {
 
-        String[] splittedGroups = lineToParse.split("[,]");
+        if(stringUnderTest == null)
+            return false;
 
-        return new LogLine(
-                splittedGroups[ipPosition],
-                Long.parseLong(splittedGroups[datePosition]),
-                Action.fromString(splittedGroups[actionPosition]),
-                splittedGroups[usernamePosition]
-        );
+        String zeroTo255 = "(\\d{1,2}|(0|1)\\" + "d{2}|2[0-4]\\d|25[0-5])";
+        String ipMaskRegex = zeroTo255 + "\\." + zeroTo255 + "\\." + zeroTo255 + "\\." + zeroTo255;
+
+        return stringUnderTest.matches(ipMaskRegex);
+    }
+
+    public static boolean isDateValid(String stringUnderTest) {
+
+        if(stringUnderTest == null)
+            return false;
+
+        long longUnderTest = Long.parseLong(stringUnderTest);
+
+        return longUnderTest >= 0;
+    }
+
+    public static boolean isActionValid(String stringUnderTest) {
+
+        if(stringUnderTest == null)
+            return false;
+
+        return Action.fromString(stringUnderTest) != null;
+    }
+
+    public static boolean isUsernameValid(String stringUnderTest) {
+
+        if(stringUnderTest == null)
+            return false;
+
+        String usernameMaskRegex = "([a-zA-Z]+\\.[a-zA-Z]+)";
+
+        return stringUnderTest.matches(usernameMaskRegex);
     }
 }
