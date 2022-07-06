@@ -1,6 +1,5 @@
 package com.hotelbeds.supplierintegrations.hackertest.utils;
 
-import com.hotelbeds.supplierintegrations.hackertest.utils.TimeCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
@@ -9,7 +8,6 @@ import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class TimeCalculatorTest {
 
