@@ -15,4 +15,29 @@ public class LogLine {
     long date;
     Action action;
     String Name;
+
+    public static boolean isLogLineParseable(String lineToTest) {
+        // TODO
+        // check number of groups splitted by commas -> should be 4
+        // check if timestamp ( epoch ) is valid
+        // etc
+        return true;
+    }
+
+    public static LogLine toLogLine(String lineToParse) {
+        // ip,date,action,username
+        final int ipPosition = 0;
+        final int datePosition = 1;
+        final int actionPosition = 2;
+        final int usernamePosition = 3;
+
+        String[] splittedGroups = lineToParse.split("[,]");
+
+        return new LogLine(
+                splittedGroups[ipPosition],
+                Long.parseLong(splittedGroups[datePosition]),
+                Action.fromString(splittedGroups[actionPosition]),
+                splittedGroups[usernamePosition]
+        );
+    }
 }
