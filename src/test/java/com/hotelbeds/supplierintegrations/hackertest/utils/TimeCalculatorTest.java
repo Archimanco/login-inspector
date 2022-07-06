@@ -4,16 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
-import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class TimeCalculatorTest {
-
-    // for the GMT+02:00
-    private static String TIMEZONEID = "Europe/Madrid";
-    private static Locale LOCALE_FOR_TESTING = new Locale("en");
 
     // Epoch timestamp: 1657021775
     // Timestamp in milliseconds: 1657021775000
@@ -86,6 +81,6 @@ class TimeCalculatorTest {
         ZonedDateTime end = ZonedDateTime.now().plusMinutes(4l).plusSeconds(3l);
 
         assertThat("ZDTs with 4 min and 3 sec difference",
-                TimeCalculator.differenceInMinutesBetween(start,end),is(4 * MINUTE_IN_MILLIS));
+                TimeCalculator.differenceInMinutesBetween(start,end),is(4l));
     }
 }
