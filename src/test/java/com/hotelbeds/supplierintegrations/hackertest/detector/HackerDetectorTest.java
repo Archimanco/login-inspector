@@ -9,4 +9,20 @@ class HackerDetectorTest {
     @Test
     void parseLine() {
     }
+
+    @Test
+    void testParseLine() {
+    }
+
+    @Test
+    void toLogLine() {
+    }
+
+    @Test
+    void isLogLineParseable() {
+    }
+
+    @Test
+    void testToLogLine() {
+    }
 }
