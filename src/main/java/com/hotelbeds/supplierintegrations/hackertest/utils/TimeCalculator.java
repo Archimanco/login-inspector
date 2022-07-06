@@ -1,4 +1,4 @@
-package com.hotelbeds.supplierintegrations.hackertest.detector.utils;
+package com.hotelbeds.supplierintegrations.hackertest.utils;
 
 import lombok.Value;
 

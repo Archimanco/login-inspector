@@ -1,13 +1,11 @@
-package com.hotelbeds.supplierintegrations.hackertest.detector.utils;
+package com.hotelbeds.supplierintegrations.hackertest.utils;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.hotelbeds.supplierintegrations.hackertest.utils.TimeCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
