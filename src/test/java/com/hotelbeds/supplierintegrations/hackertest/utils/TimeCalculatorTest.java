@@ -26,7 +26,6 @@ class TimeCalculatorTest {
     private static long MINUTE_IN_SECONDS = 60;
     private static long HOUR_IN_MINUTES = 60l;
     private static long MINUTE_IN_MILLIS = MINUTE_IN_SECONDS * SECOND_IN_MILLIS;
-
     private static long HOURS_IN_MILLIS = HOUR_IN_MINUTES * MINUTE_IN_MILLIS;
 
 
@@ -84,100 +83,11 @@ class TimeCalculatorTest {
 
     @Test
     void testDifferenceInMinutesBetween_givenZDTsWithMinutesAndSecondsDifference_yieldsMinuteDifferenceRoundedDown()  {
-        /*
-        Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
-        long timeOffset = 4 * MINUTE_IN_MILLIS + 3 * SECOND_IN_MILLIS;
-        Timestamp end = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS + timeOffset);
-         */
 
-        // TODO
-        fail("Not implemented!");
+        ZonedDateTime start = ZonedDateTime.now();
+        ZonedDateTime end = ZonedDateTime.now().plusMinutes(4l).plusSeconds(3l);
 
-
-        ZonedDateTime start = null;
-        ZonedDateTime end = null;
-
-        assertThat("Start: Tuesday, 5 July 2022 11:49:35 End: Tuesday, 5 July 2022 16:54:38",
+        assertThat("ZDTs with 4 min and 3 sec difference",
                 TimeCalculator.differenceInMinutesBetween(start,end),is(4 * MINUTE_IN_MILLIS));
     }
-
-    @Test
-    void stringInRFC2822ToZonedDateTime() {
-        // TODO
-        fail("Not implemented!");
-    }
-
-    @Test
-    void isStringRFC2822Format() {
-        // TODO
-        fail("Not implemented!");
-    }
-
-
-/*
-    @Test
-    void testTimeCalculator_givenEndBeforeStart_yieldsExpectedDifference() {
-        Date start = null, end = null;
-        long dayInMinutes = 24 * 60;
-
-        try {
-            end = formater.parse("Wed, 20 Dec 2000 16:01:07 +0200");
-            start = formater.parse("Thu, 21 Dec 2000 16:01:07 +0200");
-
-        } catch (Exception e) {
-            fail("Dates in fixture cannot be instantiated!");
-        }
-
-        assertThat("Start: Thu, 21 Dec 2000 16:01:07 End: Wed, 20 Dec 2000 16:01:07",
-                TimeCalculator.differenceInMinutesBetween(start,end),is(dayInMinutes));
-    }
-
-    @Test
-    void testTimeCalculator_givenDatesWithMinutesAndSecondsDifference_yieldsMinuteDifferenceRoundedDown()  {
-        Date start = null, end = null;
-
-        try {
-            start = formater.parse("Thu, 21 Dec 2000 16:01:07 +0200");
-            end = formater.parse("Thu, 21 Dec 2000 16:09:00 +0200");
-
-        } catch (Exception e) {
-            fail("Dates in fixture cannot be instantiated!");
-        }
-
-        assertThat("Start: Thu, 21 Dec 2000 16:01:07 End: Thu, 21 Dec 2000 16:09:00",
-                TimeCalculator.differenceInMinutesBetween(start,end),is(8l));
-    }
-
-    @Test
-    void testTimeCalculator_givenDatesWithSecondsDifference_yieldsZeroMinutes()  {
-        Date start = null, end = null;
-
-        try {
-            start = formater.parse("Thu, 21 Dec 2000 16:01:00 +0200");
-            end = formater.parse("Thu, 21 Dec 2000 16:01:07 +0200");
-
-        } catch (Exception e) {
-            fail("Dates in fixture cannot be instantiated!");
-        }
-
-        assertThat("Start: Thu, 21 Dec 2000 16:01:00 End: Thu, 21 Dec 2000 16:01:07",
-                TimeCalculator.differenceInMinutesBetween(start,end),is(0l));
-    }
-
-    @Test
-    void testTimeCalculator_givenSameDates_yieldsZeroDifference()  {
-        Date start = null;
-
-        try {
-            start = formater.parse("Thu, 21 Dec 2000 16:01:00 +0200");
-
-        } catch (Exception e) {
-            fail("Dates in fixture cannot be instantiated!");
-        }
-
-        assertThat("Start: Thu, 21 Dec 2000 16:01:00 End: Thu, 21 Dec 2000 16:01:00",
-                TimeCalculator.differenceInMinutesBetween(start,start),is(0l));
-    }
-
- */
 }
