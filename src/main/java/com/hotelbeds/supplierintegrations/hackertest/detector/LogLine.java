@@ -2,6 +2,8 @@ package com.hotelbeds.supplierintegrations.hackertest.detector;
 
 import lombok.Value;
 
+import java.time.ZonedDateTime;
+
 /**
  * The log lines will be in the following format:
  * ip,date,action,username
@@ -13,7 +15,7 @@ import lombok.Value;
 @Value
 public class LogLine {
     String ip;
-    long date;
+    ZonedDateTime date;
     Enum action;
     String Name;
 }
