@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -14,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class TimeCalculatorTest {
 
-    private TimeCalculator timeCalculator;
     // for the GMT+02:00
     private static String TIMEZONEID = "Europe/Madrid";
     private static Locale LOCALE_FOR_TESTING = new Locale("en");
@@ -24,20 +24,95 @@ class TimeCalculatorTest {
     // Date and time (GMT): Tuesday, 5 July 2022 11:49:35
     // Date and time (your time zone): martes, 5 de julio de 2022 13:49:35 GMT+02:00
     private static long KNOWN_EPOCH_TIME_IN_MILLIS = 1657021775000l;
-    private static long FIVE_HOURS_IN_MILLIS = 5 * 60 * 1000;
+    private static long SECOND_IN_MILLIS = 1000l;
+    private static long MINUTE_IN_SECONDS = 60;
+    private static long HOUR_IN_MINUTES = 60l;
+    private static long MINUTE_IN_MILLIS = MINUTE_IN_SECONDS * SECOND_IN_MILLIS;
 
-    @BeforeEach
-    public void setUp() {
-        timeCalculator = new TimeCalculator(TimeZone.getTimeZone(TIMEZONEID),LOCALE_FOR_TESTING);
-    }
+    private static long HOURS_IN_MILLIS = HOUR_IN_MINUTES * MINUTE_IN_MILLIS;
+
 
     @Test
-    void testTimeCalculator_givenStartBeforeEnd_yieldsExpectedDifference() {
+    void testDifferenceInMinutesBetween_givenTimeStampsStartBeforeEnd_yieldsExpectedDifference() {
+        final long FIVE_HOURS_IN_MILLIS = 5 * HOUR_IN_MINUTES * MINUTE_IN_MILLIS;
+        final long FIVE_HOURS_IN_MINUTES = 5 * HOUR_IN_MINUTES;
+
         Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
         Timestamp end = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS + FIVE_HOURS_IN_MILLIS);
 
         assertThat("Start: Tuesday, 5 July 2022 11:49:35 End: Tuesday, 5 July 2022 16:49:35",
-                timeCalculator.differenceInMinutesBetween(start,end),is("wee"));
+                TimeCalculator.differenceInMinutesBetween(start,end),is(FIVE_HOURS_IN_MINUTES));
+    }
+
+    @Test
+    void testDifferenceInMinutesBetween_givenTimeStampsEndBeforeStart_yieldsExpectedDifference() {
+        final long FIVE_HOURS_IN_MILLIS = 5 * HOURS_IN_MILLIS;
+        final long FIVE_HOURS_IN_MINUTES = 5 * HOUR_IN_MINUTES;
+
+        Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
+        Timestamp end = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS + FIVE_HOURS_IN_MILLIS);
+
+        assertThat("Start: Tuesday, 5 July 2022 16:49:35 End: Tuesday, 5 July 2022 11:49:35",
+                TimeCalculator.differenceInMinutesBetween(end,start),is(FIVE_HOURS_IN_MINUTES));
+    }
+
+    @Test
+    void testDifferenceInMinutesBetween_givenTimeStampsWithMinutesAndSecondsDifference_yieldsMinuteDifferenceRoundedDown()  {
+        Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
+        long timeOffset = 4 * MINUTE_IN_MILLIS + 3 * SECOND_IN_MILLIS;
+        Timestamp end = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS + timeOffset);
+
+        assertThat("Start: Tuesday, 5 July 2022 11:49:35 End: Tuesday, 5 July 2022 16:54:38",
+                TimeCalculator.differenceInMinutesBetween(start,end),is(4l));
+    }
+
+    @Test
+    void testTimeCalculator_givenTimeStampsWithSecondsDifference_yieldsZeroMinutes()  {
+        Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
+        long timeOffset = 3 * SECOND_IN_MILLIS;
+        Timestamp end = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS + timeOffset);
+
+        assertThat("Start: Tuesday, 5 July 2022 11:49:35 End: Tuesday, 5 July 2022 11:49:38",
+                TimeCalculator.differenceInMinutesBetween(start,end),is(0l));
+    }
+
+    @Test
+    void testTimeCalculator_givenTimeStampsSameDates_yieldsZeroDifference()  {
+        Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
+
+        assertThat("Start: Tuesday, 5 July 2022 11:49:35 End: Tuesday, 5 July 2022 11:49:35",
+                TimeCalculator.differenceInMinutesBetween(start,start),is(0l));
+    }
+
+    @Test
+    void testDifferenceInMinutesBetween_givenZDTsWithMinutesAndSecondsDifference_yieldsMinuteDifferenceRoundedDown()  {
+        /*
+        Timestamp start = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS);
+        long timeOffset = 4 * MINUTE_IN_MILLIS + 3 * SECOND_IN_MILLIS;
+        Timestamp end = new Timestamp(KNOWN_EPOCH_TIME_IN_MILLIS + timeOffset);
+         */
+
+        // TODO
+        fail("Not implemented!");
+
+
+        ZonedDateTime start = null;
+        ZonedDateTime end = null;
+
+        assertThat("Start: Tuesday, 5 July 2022 11:49:35 End: Tuesday, 5 July 2022 16:54:38",
+                TimeCalculator.differenceInMinutesBetween(start,end),is(4 * MINUTE_IN_MILLIS));
+    }
+
+    @Test
+    void stringInRFC2822ToZonedDateTime() {
+        // TODO
+        fail("Not implemented!");
+    }
+
+    @Test
+    void isStringRFC2822Format() {
+        // TODO
+        fail("Not implemented!");
     }
 
 
