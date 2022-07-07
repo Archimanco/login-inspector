@@ -45,7 +45,6 @@ public class HackerDetector implements HackerDetectable{
 
     private void popLogsFiveMinutesBefore(long date) {
         long newTimeWindowStart = date - MINUTES_TO_WATCH_IN_MILLIS;
-        SortedMap<Long, LogLine> testvariable = storedLogs.headMap(newTimeWindowStart);
         storedLogs.headMap(newTimeWindowStart).clear();
     }
 }
